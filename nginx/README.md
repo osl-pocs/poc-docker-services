@@ -11,6 +11,9 @@
   In that page, it shows a domain, copy that and use it in the .env file for the variable
   SERVER_DOMAIN, e.g. `SERVER_DOMAIN=999b-999-9-999-999.ngrok-free.app`.
   Note: Don't copy the protocol part to the SERVER_DOMAIN (e.g. `https://`)
+* If you are running it locally, add the ngrok subdomain to your `/etc/hosts`, for example:
+  `127.0.0.1 999b-999-9-999-999.ngrok-free.app`. Every time you run `ngrok` container, you 
+  will need to update `/etc/hosts`
 * Run the script `./setup/run.sh`
 
 ## Troubleshoot

@@ -7,7 +7,7 @@ touch .env
 export $(cat .env)
 
 # start the web server with just http
-./setup/app.sh http localhost
+./setup/app.sh http ${SERVER_DOMAIN}
 
 # Create the first certificates for the web server
 CERTBOT_EXTRA_ARGS=
@@ -15,10 +15,20 @@ CERTBOT_EXTRA_ARGS=
 # CERTBOT_EXTRA_ARGS="--staging"
 # fi
 
+set -x
 # certbot certonly --nginx --staging -d example.org
-docker-compose run --rm  certbot certonly $CERTBOT_EXTRA_ARGS \
-  --webroot --webroot-path /var/www/certbot/ -v \
+docker-compose run --rm certbot \
+  certonly -v $CERTBOT_EXTRA_ARGS \
+  --webroot \
+  --webroot-path /var/www/certbot/ \
+  --agree-tos \
+  --renew-by-default \
+  --preferred-challenges http-01 \
+  --server https://acme-v02.api.letsencrypt.org/directory \
+  --text \
+  --email ivan.ogasawara@gmail.com \
   -d ${SERVER_DOMAIN}
+set +x
 
 # start the web server with just https
 ./setup/app.sh https ${SERVER_DOMAIN}
