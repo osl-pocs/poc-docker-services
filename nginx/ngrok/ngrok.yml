@@ -1,0 +1,7 @@
+version: 2
+authtoken: 2ArCRfj0PXuCDqh2m0CA3huwZBb_ko4rfA25RZLtYe6yi9Aw
+
+tunnels:
+  app:
+    proto: http
+    addr: nginx:80

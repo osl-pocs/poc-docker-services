@@ -1,0 +1,6 @@
+name: poc-docker-services
+channels:
+  - nodefaults
+  - conda-forge
+dependencies:
+  - docker-compose
