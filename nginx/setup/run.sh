@@ -23,8 +23,8 @@ docker-compose run --rm certbot \
   --webroot-path /var/www/certbot/ \
   --agree-tos \
   --renew-by-default \
-  --preferred-challenges http-01 \
-  --server https://acme-v02.api.letsencrypt.org/directory \
+  # --preferred-challenges http-01 \
+  --server http://localhost:4001/directory \
   --text \
   --email ivan.ogasawara@gmail.com \
   -d ${SERVER_DOMAIN}
@@ -32,4 +32,3 @@ set +x
 
 # start the web server with just https
 ./setup/app.sh https ${SERVER_DOMAIN}
-
