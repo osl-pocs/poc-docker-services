@@ -10,7 +10,7 @@ services:
     env_file:
       - .env
     environment:
-      SERVER_DOMAIN: ${SERVER_DOMAIN:-localhost}
+      SERVER_DOMAIN: ${SERVER_DOMAIN:-local.osl.org}
       APP_DOMAIN: ${APP_DOMAIN:-app}
     restart: unless-stopped
     volumes:

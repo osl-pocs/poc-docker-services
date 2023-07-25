@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-## NOTES: 
+## NOTES:
 #   - First parameter should be "http" OR "https"
 #   - Second parameter is the server domain
 ##
@@ -11,5 +11,5 @@ touch .env
 export $(cat .env)
 
 # start the web server with just http
+docker-compose rm --force --stop -v  app nginx
 docker-compose up --force-recreate -d app nginx
-
