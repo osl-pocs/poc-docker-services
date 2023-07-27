@@ -10,20 +10,22 @@ services:
     env_file:
       - .env
     environment:
-      SERVER_DOMAIN: ${SERVER_DOMAIN:-localhost}
+      SERVER_DOMAIN: ${SERVER_DOMAIN:-local.osl.org}
       APP_DOMAIN: ${APP_DOMAIN:-app}
     restart: unless-stopped
     volumes:
       - ./nginx/conf/${NGINX_PROTOCOL:-http}.conf.template:/etc/nginx/templates/default.conf.template:ro
-      - ./certbot/www:/var/www/certbot/:ro
+      - ./certbot/acme-challenge:/var/www/acme-challenge/:ro
       - ./certbot/conf/:/etc/nginx/ssl/:ro
-  
+
   certbot:
     image: certbot/certbot:latest
     volumes:
-      - ./certbot/www/:/var/www/certbot/:rw
+      - ./certbot/acme-challenge/:/var/www/acme-challenge/:rw
       - ./certbot/conf/:/etc/letsencrypt/:rw
       - ./certbot/log/:/var/log/:rw
+    networks:
+      bridgenw:
 
   app:
     hostname: app
@@ -33,17 +35,7 @@ services:
     ports:
       - 8000:8000
 
-  # note: ngrok is just used for the tests locally, 
-  #       it shouldn't be used for production
-  ngrok:
-    image: ngrok/ngrok:latest
-    restart: unless-stopped
-    command:
-      - "start"
-      - "--all"
-      - "--config"
-      - "/etc/ngrok.yml"
-    volumes:
-      - ./ngrok/ngrok.yml:/etc/ngrok.yml
-    ports:
-      - 4040:4040
+
+networks:
+  bridgenw:
+    driver: bridge
