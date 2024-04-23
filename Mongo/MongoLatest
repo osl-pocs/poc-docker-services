@@ -1,0 +1,7 @@
+FROM mongo:latest
+
+# Define el directorio de datos de MongoDB como un volumen
+VOLUME /data/db
+
+# Configura el comando por defecto para iniciar MongoDB
+CMD ["mongod", "--bind_ip", "0.0.0.0"] # Comando: mongod
